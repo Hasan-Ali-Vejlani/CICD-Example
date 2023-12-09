@@ -1,0 +1,30 @@
+name: CICD EXAMPLE
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+
+    - name: Build binary
+      run: |
+        cargo build --release
+      working-directory: ${{ github.workspace }}
+
+    - name: Execute binary
+      run: |
+        ./target/release/<your_project_name>
+      working-directory: ${{ github.workspace }}
